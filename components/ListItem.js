@@ -12,7 +12,7 @@ import {View} from 'react-native';
 const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
-  const {likeAnImage, loadLikes} = useFavorite();
+  const {likeAnImage, loadLikes,dislikeAnImage,loadDisLikes} = useFavorite();
   const {setUpdate, update} = useContext(MainContext);
   const [like, setLike] = useState(true);
 
@@ -30,6 +30,21 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
     }
   };
 
+  /*const doDisLike = async () => {
+    try {
+      setLike(like);
+      if (!like) {
+        Alert.alert('Message', 'You disliked this pet!');
+      }
+      const userToken = await AsyncStorage.getItem('userToken');
+      const unfavResponse = await dislikeAnImage(singleMedia.file_id, userToken);
+      console.log('posting user dislike', unfavResponse);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  */
+
   const loadlike = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
@@ -45,9 +60,26 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       console.log('error');
     }
   };
+/*
+  const loadDislike = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken');
+      const favResponse = await loadDisLikes(userToken);
 
+      favResponse.forEach((item) => {
+        console.log('posting user like', item);
+        if (item.file_id === singleMedia.file_id) {
+          setLike(true);
+        }
+      });
+    } catch (error) {
+      console.log('error');
+    }
+  };
+*/
   useEffect(() => {
     loadlike();
+ //   loadDislike();
   }, []);
   /*const save = async () => {
     try {
@@ -141,6 +173,16 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
               size={20}
               type="font-awesome-5"
               color={like ? 'grey' : 'red'}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity /*onPress={doDisLike}*/>
+            <Icon
+              raised
+              name={like ? 'thumbs-down' : 'thumbs-down'}
+              size={20}
+              type="font-awesome-5"
+              color={like ? 'red' : 'grey'}
             />
           </TouchableOpacity>
           <Icon
