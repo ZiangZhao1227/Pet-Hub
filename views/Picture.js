@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ActivityIndicator} from 'react-native';
+import {StyleSheet, ActivityIndicator, View} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
-import {Avatar, Card, Text} from 'react-native-elements';
+import {Avatar, Card, ListItem, Text, Icon} from 'react-native-elements';
 import moment from 'moment';
 import {useTag, useUser} from '../hooks/ApiHooks';
 import {Video} from 'expo-av';
@@ -10,7 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {ScrollView} from 'react-native-gesture-handler';
 
-const Single = ({route}) => {
+const Picture = ({route}) => {
+  const {number} = route.params;
   const {file} = route.params;
   const [avatar, setAvatar] = useState('http://placekitten.com/100');
   const [owner, setOwner] = useState({username: 'somebody'});
@@ -88,55 +89,40 @@ const Single = ({route}) => {
   }, [videoRef]);
 
   return (
-    <ScrollView style={{backgroundColor: 'pink'}}>
-      <Card
-        containerStyle={{backgroundColor: 'lightcyan', borderColor: 'blue'}}
-        borderBottomLeftRadius={54}
-      >
-        <Card.Title h1> {file.title}</Card.Title>
-        <Card.Divider />
-        {file.media_type === 'image' ? (
-          <Card.Image
-            source={{uri: uploadsUrl + file.filename}}
-            style={styles.image}
-            PlaceholderContent={<ActivityIndicator />}
+    <ScrollView>
+      <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
+        <View style={{justifyContent: 'center'}}>
+          <Avatar
+            source={{uri: avatar}}
+            rounded
+            size="large"
+            containerStyle={{alignSelf: 'center'}}
           />
-        ) : (
-          <Video
-            ref={handleVideoRef}
-            source={{uri: uploadsUrl + file.filename}}
-            style={styles.image}
-            useNativeControls={true}
-            resizeMode="cover"
-            onError={(err) => {
-              console.error('video', err);
+        </View>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 20,
+              textAlign: 'center',
+              margin: 20,
             }}
-            posterSource={{uri: uploadsUrl + file.screenshot}}
+          >
+            You added {owner.username}'s pet in the cart.
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+          <Icon
+            name="grin-hearts"
+            type="font-awesome-5"
+            color="darkcyan"
+            size="37"
+            containerStyle={{marginBottom: 15}}
           />
-        )}
-        <Card.Divider />
-        <Text style={styles.description}>{file.description}</Text>
-        <Card.Divider />
+        </View>
 
-        <Card.Title style={{color: 'grey'}}>
-          {moment(file.time_added).format('LLL')}
-        </Card.Title>
-      </Card>
-
-      <Card
-        containerStyle={{backgroundColor: 'lightyellow', borderColor: 'blue'}}
-        borderTopRightRadius={54}
-      >
-        <Avatar source={{uri: avatar}} rounded size="large" />
-        <Card.Title h4>Contact Information</Card.Title>
-        <Card.Divider style={{backgroundColor: 'gold', height: 15}} />
-        <Text style={{marginBottom: 10}}>Owner name: {owner.username}</Text>
-        <Card.Divider style={{backgroundColor: 'blue'}} />
-        <Text style={{marginBottom: 10}}>Owner email: {owner.email}</Text>
-        <Card.Divider style={{backgroundColor: 'blue'}} />
-        <Text style={{marginBottom: 10}}>
-          Owner fullname: {owner.full_name}
-        </Text>
+        <Card.Divider />
+        <ListItem containerStyle={{backgroundColor: '#FFDCDC'}}></ListItem>
       </Card>
     </ScrollView>
   );
@@ -148,14 +134,10 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
   },
-  description: {
-    marginBottom: 10,
-    fontSize: 19,
-  },
 });
 
-Single.propTypes = {
+Picture.propTypes = {
   route: PropTypes.object,
 };
 
-export default Single;
+export default Picture;

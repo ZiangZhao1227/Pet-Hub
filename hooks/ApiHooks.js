@@ -12,7 +12,7 @@ const doFetch = async (url, options = {}) => {
     throw new Error(json.message + ': ' + json.error);
   } else if (!response.ok) {
     // if API response does not contain error message, but there is some other error
-    throw new Error('doFetch failed');
+    throw new Error('doFetch failed: ' + response.status);
   } else {
     // if all goes well
     return json;
@@ -147,6 +147,38 @@ const useTag = () => {
   return {getFilesByTag, postTag};
 };
 
+const useFavorite = () => {
+  const likeAnImage = async (fileId, token) => {
+    const request = 'file_id=' + fileId;
+    console.log(request);
+    const options = {
+      method: 'POST',
+      headers: {'x-access-token': token},
+      body: request,
+    };
+    try {
+      console.log(fileId, token);
+      const result = await doFetch(baseUrl + 'favourites', options);
+      return result;
+    } catch (error) {
+      throw new Error('liked function error: ' + error.message);
+    }
+  };
+  const loadLikes = async (token) => {
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    try {
+      const result = await doFetch(baseUrl + 'favourites', options);
+      return result;
+    } catch (error) {
+      throw new Error('liked function error: ' + error.message);
+    }
+  };
+  return {likeAnImage, loadLikes};
+};
+
 const useMedia = () => {
   const upload = async (fd, token) => {
     const options = {
@@ -197,4 +229,4 @@ const useMedia = () => {
   return {upload, updateFile, deleteFile};
 };
 
-export {useLoadMedia, useLogin, useUser, useTag, useMedia};
+export {useLoadMedia, useLogin, useUser, useTag, useMedia, useFavorite};

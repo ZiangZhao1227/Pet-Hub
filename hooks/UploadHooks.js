@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {validator} from '../utils/validator';
 
 const constraints = {
-  pet_name: {
+  title: {
     presence: {
       message: 'cannot be empty',
     },
@@ -11,51 +11,21 @@ const constraints = {
       message: 'min length is 3 characters',
     },
   },
-  pet_type: {
-    presence: {
-      message: 'cannot be empty',
-    },
-    length: {
-      minimum: 3,
-      message: `Enter: Cat or Dog or Other`,
-    },
-  },
-  pet_age: {
-    presence: {
-      message: 'cannot be empty',
-    },
-    length: {
-      minimum: 1,
-      message: 'min length is 1 number',
-    },
-  },
-  pet_health: {
-    presence: {
-      message: 'cannot be empty',
-    },
-    length: {
-      minimum: 10,
-      message: 'Vaccinated or Not Vaccinated',
-    },
-  },
-  pet_description: {
+  description: {
     presence: {
       message: 'cannot be empty',
     },
     length: {
       minimum: 5,
-      message: 'Short description of the pet you want to addopt.',
+      message: 'min length is 5 characters',
     },
   },
 };
 
 const useUploadForm = (callback) => {
   const [inputs, setInputs] = useState({
-    pet_name: '',
-    pet_type: '',
-    pet_age: '',
-    pet_health: '',
-    pet_description: '',
+    title: '',
+    description: '',
   });
   const [uploadErrors, setUploadErrors] = useState({});
 
@@ -79,11 +49,8 @@ const useUploadForm = (callback) => {
 
   const reset = () => {
     setInputs({
-      pet_name: '',
-      pet_type: '',
-      pet_age: '',
-      pet_health: '',
-      pet_description: '',
+      title: '',
+      description: '',
     });
     setUploadErrors({});
   };

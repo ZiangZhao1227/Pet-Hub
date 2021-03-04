@@ -8,13 +8,14 @@ import {
 import Home from '../views/Home';
 import Profile from '../views/Profile';
 import Single from '../views/Single';
+import Picture from '../views/Picture';
 import Login from '../views/Login';
 import {MainContext} from '../contexts/MainContext';
 import {Icon} from 'react-native-elements';
 import Upload from '../views/Upload';
 import MyFiles from '../views/MyFiles';
 import Modify from '../views/Modify';
-import MyLikes from '../views/MyLikes';
+import MyPetCart from '../views/MyPetCart';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -28,7 +29,7 @@ const TabScreen = () => {
           let iconName;
 
           switch (route.name) {
-            case 'Pet-List':
+            case 'Pet List':
               iconName = 'paw';
               break;
             case 'Profile':
@@ -51,9 +52,12 @@ const TabScreen = () => {
       tabBarOptions={{
         activeTintColor: '#1ABBD1',
         inactiveTintColor: 'gray',
+        style: {
+          backgroundColor: 'pink', //color you want to change
+        },
       }}
     >
-      <Tab.Screen name="Pet-List" component={Home} />
+      <Tab.Screen name="Pet List" component={Home} />
       <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Upload" component={Upload} />
     </Tab.Navigator>
@@ -71,12 +75,91 @@ const StackScreen = () => {
             component={TabScreen}
             options={({route}) => ({
               headerTitle: getFocusedRouteNameFromRoute(route),
+              headerTintColor: '#fff',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
             })}
           />
-          <Stack.Screen name="Modify" component={Modify} />
-          <Stack.Screen name="My Files" component={MyFiles} />
-          <Stack.Screen name="Single" component={Single} />
-          <Stack.Screen name="My Likes" component={MyLikes} />
+          <Stack.Screen
+            name="Modify"
+            component={Modify}
+            options={{
+              title: 'Modify pet info',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="My Files"
+            component={MyFiles}
+            options={{
+              title: 'My pets for adoption',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="Single"
+            component={Single}
+            options={{
+              title: 'Pet info',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="Picture"
+            component={Picture}
+            options={{
+              title: 'Pet info',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="My Pet Cart"
+            component={MyPetCart}
+            options={{
+              title: 'Pet adoption page',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
+              headerTintColor: '#fff',
+            }}
+          />
         </>
       ) : (
         <>

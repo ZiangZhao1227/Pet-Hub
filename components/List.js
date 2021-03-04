@@ -43,34 +43,6 @@ const List = ({navigation, myFilesOnly}) => {
     }
   };
 
-  const ItemView = ({item}) => {
-    return (
-      // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-        {item.id}
-        {'.'}
-        {item.title.toUpperCase()}
-      </Text>
-    );
-  };
-
-  const ItemSeparatorView = () => {
-    return (
-      // Flat List Item Separator
-      <View
-        style={{
-          height: 0.5,
-          width: '100%',
-          backgroundColor: '#C8C8C8',
-        }}
-      />
-    );
-  };
-
-  const getItem = (item) => {
-    // Function for click on an item
-    alert('Id : ' + item.id + ' Title : ' + item.title);
-  };
   console.log('search master data source', filteredDataSource);
   // console.log('search media array', mediaArray);
   return (
@@ -78,11 +50,13 @@ const List = ({navigation, myFilesOnly}) => {
       <View style={styles.container}>
         <SearchBar
           round
-          searchIcon={{size: 24}}
+          searchIcon={{size: 24,color:"#1ABBD1"}}
           onChangeText={(text) => searchFilterFunction(text)}
-          onClear={(text) => searchFilterFunction('')}
-          placeholder="Type Here..."
+          onClear={() => searchFilterFunction('')}
+          placeholder="Find your favorite pet"
           value={search}
+          showLoading
+          lightTheme
         />
 
         <FlatList

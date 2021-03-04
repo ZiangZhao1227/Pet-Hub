@@ -29,11 +29,8 @@ const Upload = ({navigation}) => {
   const doUpload = async () => {
     const formData = new FormData();
     // add text to formData
-    formData.append('pet_name', inputs.pet_name);
-    formData.append('pet_type', inputs.pet_type);
-    formData.append('pet_age', inputs.pet_age);
-    formData.append('pet_health', inputs.pet_health);
-    formData.append('pet_description', inputs.pet_description);
+    formData.append('title', inputs.title);
+    formData.append('description', inputs.description);
     // add image to formData
     const filename = image.split('/').pop();
     const match = /\.(\w+)$/.exec(filename);
@@ -123,8 +120,13 @@ const Upload = ({navigation}) => {
   return (
     <ScrollView>
       <KeyboardAvoidingView behavior="position" enabled>
-        <Card>
-          <Text h4>Upload media file</Text>
+        <Card
+          containerStyle={{backgroundColor: '#FFDCDC'}}
+          borderBottomLeftRadius={54}
+        >
+          <Text h4 style={{alignSelf: 'center'}}>
+            Upload media file
+          </Text>
           {image && (
             <>
               {filetype === 'image' ? (
@@ -142,51 +144,78 @@ const Upload = ({navigation}) => {
             </>
           )}
           <Input
-            placeholder="pet_name"
-            value={inputs.pet_name}
-            onChangeText={(txt) => handleInputChange('pet_name', txt)}
-            errorMessage={uploadErrors.pet_name}
+            label="title"
+            labelStyle={{color: '#1ABBD1'}}
+            placeholder="title"
+            value={inputs.title}
+            onChangeText={(txt) => handleInputChange('title', txt)}
+            errorMessage={uploadErrors.title}
+            leftIcon={{
+              type: 'font-awesome-5',
+              name: 'file-signature',
+              color: 'gray',
+            }}
           />
           <Input
-            placeholder="pet_type"
-            value={inputs.pet_type}
-            onChangeText={(txt) => handleInputChange('pet_type', txt)}
-            errorMessage={uploadErrors.pet_type}
+            placeholder="description"
+            value={inputs.description}
+            onChangeText={(txt) => handleInputChange('description', txt)}
+            errorMessage={uploadErrors.description}
+            leftIcon={{
+              type: 'font-awesome-5',
+              name: 'comment-dots',
+              color: 'gray',
+            }}
+            label="description"
+            labelStyle={{color: '#1ABBD1'}}
           />
-          <Input
-            placeholder="pet_age"
-            value={inputs.pet_age}
-            onChangeText={(txt) => handleInputChange('pet_age', txt)}
-            errorMessage={uploadErrors.pet_age}
+
+          <Button
+            title="Choose from library"
+            onPress={() => pickImage(true)}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
-          <Input
-            placeholder="pet_health"
-            value={inputs.pet_health}
-            onChangeText={(txt) => handleInputChange('pet_health', txt)}
-            errorMessage={uploadErrors.pet_health}
+          <Button
+            title="Use camera"
+            onPress={() => pickImage(false)}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
-          <Input
-            placeholder="pet_description"
-            value={inputs.pet_description}
-            onChangeText={(txt) => handleInputChange('pet_description', txt)}
-            errorMessage={uploadErrors.pet_description}
-          />
-          <Button title="Choose from library" onPress={() => pickImage(true)} />
-          <Button title="Use camera" onPress={() => pickImage(false)} />
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
             title="Upload file"
             onPress={doUpload}
             disabled={
-              uploadErrors.pet_name !== null ||
-              uploadErrors.pet_type !== null ||
-              uploadErrors.pet_age !== null ||
-              uploadErrors.pet_health !== null ||
-              uploadErrors.pet_description !== null ||
+              uploadErrors.title !== null ||
+              uploadErrors.description !== null ||
               image === null
             }
+            buttonStyle={{
+              backgroundColor: 'darkorange',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
-          <Button title="Reset" onPress={doReset} />
+          <Button
+            title="Reset"
+            onPress={doReset}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
+          />
         </Card>
       </KeyboardAvoidingView>
     </ScrollView>

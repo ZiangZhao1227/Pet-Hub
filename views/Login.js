@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useUser} from '../hooks/ApiHooks';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import {Card, ListItem, Text, Icon} from 'react-native-elements';
+import {Card, ListItem, Text, Icon, Image} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Login = ({navigation}) => {
@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
               style={styles.image}
             >
               <View style={styles.form}>
-                <Card>
+                <Card containerStyle={{backgroundColor: 'lightcyan'}}>
                   {formToggle ? (
                     <>
                       <Card.Title h3> Login</Card.Title>
@@ -63,7 +63,10 @@ const Login = ({navigation}) => {
                     </>
                   ) : (
                     <>
-                      <Card.Title h3> Register</Card.Title>
+                      <Card.Title h3 style={{backgroundColor: 'lightcyan'}}>
+                        {' '}
+                        Register
+                      </Card.Title>
                       <Card.Divider />
                       <RegisterForm navigation={navigation} />
                     </>
@@ -72,11 +75,12 @@ const Login = ({navigation}) => {
                     onPress={() => {
                       setFormToggle(!formToggle);
                     }}
+                    containerStyle={{backgroundColor: 'lightcyan'}}
                   >
                     <ListItem.Content>
                       <Text style={styles.text}>
                         {formToggle
-                          ? 'Does not have an account yet? Sign up here.'
+                          ? "Don't have an account yet? Sign up here."
                           : 'Already have an account? Log in here.'}
                       </Text>
                     </ListItem.Content>
@@ -114,8 +118,8 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: 'center',
     padding: 10,
-    color: '#1ABBD1',
-    fontSize:15,
+    color: 'black',
+    fontSize: 15,
   },
 });
 

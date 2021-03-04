@@ -1,19 +1,39 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, ActivityIndicator} from 'react-native';
+import {StyleSheet, ActivityIndicator, Alert} from 'react-native';
 import {MainContext} from '../contexts/MainContext';
 import PropTypes from 'prop-types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Card, Text, ListItem, Avatar} from 'react-native-elements';
-import {useTag} from '../hooks/ApiHooks';
+import {
+  Card,
+  Text,
+  ListItem,
+  Avatar,
+  Button,
+  Icon,
+} from 'react-native-elements';
 import {uploadsUrl} from '../utils/Variables';
 import {ScrollView} from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
+import {useMedia, useTag} from '../hooks/ApiHooks';
+import {View} from 'react-native';
 
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
-  const [avatar, setAvatar] = useState([setImage]);
+  const [image, setImage] = useState(null);
+  const {upload} = useMedia();
+  const [isUploading, setIsUploading] = useState(false);
+  const [avatar, setAvatar] = useState('http://placekitten.com/640');
   const [filetype, setFiletype] = useState('');
-  const [image, setImage] = useState('https://placekitten.com/640');
+  const {getFilesByTag} = useTag();
+  const {postTag} = useTag();
+
+  const logout = async () => {
+    setIsLoggedIn(false);
+    await AsyncStorage.clear();
+    if (!isLoggedIn) {
+      navigation.navigate('Login');
+    }
+  };
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -27,16 +47,17 @@ const Profile = ({navigation}) => {
       }
     };
     fetchAvatar();
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const {status} = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+          alert(
+            'Sorry, we need camera roll and camera permissions to make this work!'
+          );
+        }
+      }
+    })();
   }, []);
-  const {getFilesByTag} = useTag();
-  const logout = async () => {
-    setIsLoggedIn(false);
-    await AsyncStorage.clear();
-    if (!isLoggedIn) {
-      // this is to make sure isLoggedIn has changed, will be removed later
-      navigation.navigate('Login');
-    }
-  };
 
   const pickImage = async (library) => {
     let result = null;
@@ -55,8 +76,8 @@ const Profile = ({navigation}) => {
     console.log(result);
 
     if (!result.cancelled) {
-      // console.log('pickImage result', result);
       setFiletype(result.type);
+      setAvatar(result.uri);
       setImage(result.uri);
     }
   };
@@ -64,7 +85,7 @@ const Profile = ({navigation}) => {
   const doUpload = async () => {
     const formData = new FormData();
     // add text to formData
-    formData.append('title', 'something');
+    formData.append('title', 'profile');
 
     // add image to formData
     const filename = image.split('/').pop();
@@ -84,20 +105,18 @@ const Profile = ({navigation}) => {
       const tagResponse = await postTag(
         {
           file_id: resp.file_id,
-          tag: avatar_ + user.user_id,
+          tag: 'avatar_' + user.user_id,
         },
         userToken
       );
       console.log('posting app identifier', tagResponse);
       Alert.alert(
-        'Upload',
-        'File uploaded',
+        'How nice!',
+        'Profile picture changed',
         [
           {
             text: 'Ok',
             onPress: () => {
-              setUpdate(update + 1);
-              doReset();
               navigation.navigate('Home');
             },
           },
@@ -112,48 +131,102 @@ const Profile = ({navigation}) => {
     }
   };
 
-  console.log(avatar);
-
   return (
     <ScrollView>
       <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
         <Card.Title>
-          <Text h1 style={{color: 'white'}}>
+          <Text h1 style={{color: '#1ABBD1'}}>
             {user.username}
           </Text>
         </Card.Title>
         <Card.Image
-          title="Choose from library"
-          onPress={() => pickImage(true)}
-          buttonStyle={{backgroundColor: '#1ABBD1', size: 20, marginBottom: 20}}
-          source={{uri: image}}
+          source={{uri: avatar}}
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
         />
+        <View
+          style={[
+            {width: '55%', margin: 10, alignSelf: 'center', marginTop: 18},
+          ]}
+        >
+          <Button
+            icon={
+              <Icon
+                name="hand-pointer"
+                type="font-awesome-5"
+                size={20}
+                color="white"
+                containerStyle={{marginHorizontal: 10}}
+              />
+            }
+            iconLeft
+            title="Select an image"
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              borderRadius: 20,
+            }}
+            raised
+            onPress={() => pickImage(true)}
+          />
+        </View>
+        <View
+          style={[
+            {width: '65%', margin: 10, alignSelf: 'center', marginBottom: 18},
+          ]}
+        >
+          <Button
+            icon={
+              <Icon
+                name="image"
+                type="font-awesome-5"
+                size={20}
+                color="white"
+                containerStyle={{marginHorizontal: 10}}
+              />
+            }
+            iconLeft
+            title="Upload profile image"
+            buttonStyle={{backgroundColor: 'orange'}}
+            raised
+            onPress={doUpload}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              borderRadius: 20,
+            }}
+          />
+        </View>
 
         <ListItem>
           <Avatar icon={{name: 'email', color: '#1ABBD1'}} />
           <Text>{user.email}</Text>
         </ListItem>
-        <ListItem>
+        <ListItem bottomDivider>
           <Avatar
             icon={{name: 'user', type: 'font-awesome', color: '#1ABBD1'}}
           />
           <Text>{user.full_name}</Text>
         </ListItem>
-        <ListItem bottomDivider onPress={() => navigation.push('My Likes')}>
+        <ListItem bottomDivider onPress={() => navigation.push('My Pet Cart')}>
           <Avatar
-            icon={{name: 'heartbeat', type: 'font-awesome', color: '#1ABBD1'}}
+            icon={{name: 'crow', type: 'font-awesome-5', color: '#1ABBD1'}}
           />
           <ListItem.Content>
-            <ListItem.Title>My Likes</ListItem.Title>
+            <ListItem.Title>Adopt a pet page</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
         </ListItem>
         <ListItem bottomDivider onPress={() => navigation.push('My Files')}>
-          <Avatar icon={{name: 'perm-media', color: '#1ABBD1'}} />
+          <Avatar
+            icon={{
+              name: 'heart',
+              type: 'font-awesome-5',
+              color: '#1ABBD1',
+            }}
+          />
           <ListItem.Content>
-            <ListItem.Title>My Files</ListItem.Title>
+            <ListItem.Title>My pets for adoption page</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
         </ListItem>
