@@ -30,7 +30,7 @@ const Modify = ({navigation, route}) => {
     try {
       setIsUploading(true);
       const userToken = await AsyncStorage.getItem('userToken');
-      const resp = await updateFile(file_id, userToken);
+      const resp = await updateFile(file.file_id, inputs, userToken);
       console.log('update response', resp);
       setUpdate(update + 1);
       navigation.pop();
@@ -53,32 +53,70 @@ const Modify = ({navigation, route}) => {
     reset();
   };
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: 'pink'}}>
       <KeyboardAvoidingView behavior="position" enabled>
-        <Card>
-          <Text h4>Update file info</Text>
+        <Card
+          containerStyle={{backgroundColor: '#FFDCDC'}}
+          borderBottomLeftRadius={54}
+        >
+          <Text h4 style={{alignSelf: 'center'}}>
+            Update file info
+          </Text>
           {/* TODO: add similar media view than Single.js */}
           <Input
+            label="title"
+            labelStyle={{color: '#1ABBD1'}}
+            font="font-awesome-5"
+            color="gray"
             placeholder="title"
             value={inputs.title}
             onChangeText={(txt) => handleInputChange('title', txt)}
             errorMessage={uploadErrors.title}
+            leftIcon={{
+              type: 'font-awesome-5',
+              name: 'file-signature',
+              color: 'gray',
+            }}
           />
           <Input
+            label="description"
+            labelStyle={{color: '#1ABBD1'}}
+            font="font-awesome-5"
+            color="gray"
             placeholder="description"
             value={inputs.description}
             onChangeText={(txt) => handleInputChange('description', txt)}
             errorMessage={uploadErrors.description}
+            leftIcon={{
+              type: 'font-awesome-5',
+              name: 'comment-dots',
+              color: 'gray',
+            }}
           />
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
             title="Update"
             onPress={doUpdate}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
             // disabled={
             //   uploadErrors.title !== null || uploadErrors.description !== null
             // }
           />
-          <Button title="Reset" onPress={doReset} />
+          <Button
+            title="Reset"
+            onPress={doReset}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
+          />
         </Card>
       </KeyboardAvoidingView>
     </ScrollView>
