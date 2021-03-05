@@ -12,7 +12,7 @@ import {View} from 'react-native';
 const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
-  const {likeAnImage, loadLikes,dislikeAnImage,loadDisLikes} = useFavorite();
+  const {likeAnImage, loadLikes, dislikeAnImage, loadDisLikes} = useFavorite();
   const {setUpdate, update} = useContext(MainContext);
   const [like, setLike] = useState(true);
 
@@ -30,9 +30,9 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
     }
   };
 
-  /*const doDisLike = async () => {
+  const doDisLike = async () => {
     try {
-      setLike(like);
+      setLike(!like);
       if (!like) {
         Alert.alert('Message', 'You disliked this pet!');
       }
@@ -43,7 +43,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       console.log(error);
     }
   };
-  */
+
 
   const loadlike = async () => {
     try {
@@ -60,7 +60,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       console.log('error');
     }
   };
-/*
+
   const loadDislike = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken');
@@ -69,43 +69,19 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       favResponse.forEach((item) => {
         console.log('posting user like', item);
         if (item.file_id === singleMedia.file_id) {
-          setLike(true);
+          setLike(false);
         }
       });
     } catch (error) {
       console.log('error');
     }
   };
-*/
+
   useEffect(() => {
     loadlike();
- //   loadDislike();
+    loadDislike();
   }, []);
-  /*const save = async () => {
-    try {
-      setLike(!like);
-      if (like) {
-        Alert.alert('Message', 'You liked this pet!');
-      }
-      await AsyncStorage.setItem('key', JSON.stringify(like));
-    } catch (err) {
-      alert(err);
-    }
-  };
-  const load = async () => {
-    try {
-      let fav = await AsyncStorage.getItem('key');
-      if (fav !== null) {
-        setLike(!JSON.parse(fav));
-      }
-    } catch (err) {
-      alert(err);
-    }
-  };
-  useEffect(() => {
-    load();
-  }, []);
-*/
+
   const doDelete = () => {
     Alert.alert(
       'Delete',
@@ -176,7 +152,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity /*onPress={doDisLike}*/>
+          <TouchableOpacity onPress={doDisLike}>
             <Icon
               raised
               name={like ? 'thumbs-down' : 'thumbs-down'}
@@ -194,7 +170,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             onPress={() => {
               navigation.navigate('Picture', {file: singleMedia});
             }}
-            containerStyle={{marginLeft: 45}}
+            containerStyle={{marginLeft: 10}}
           />
         </View>
       </View>
