@@ -30,7 +30,7 @@ const Modify = ({navigation, route}) => {
     try {
       setIsUploading(true);
       const userToken = await AsyncStorage.getItem('userToken');
-      const resp = await updateFile(file_id, userToken);
+      const resp = await updateFile(file.file_id, inputs, userToken);
       console.log('update response', resp);
       setUpdate(update + 1);
       navigation.pop();
@@ -93,6 +93,7 @@ const Modify = ({navigation, route}) => {
               color: 'gray',
             }}
           />
+
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
             title="Update"

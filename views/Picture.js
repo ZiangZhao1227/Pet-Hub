@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ActivityIndicator, View} from 'react-native';
+import {StyleSheet, ActivityIndicator, View,} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
 import {Avatar, Card, ListItem, Text, Icon} from 'react-native-elements';
@@ -11,13 +11,15 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Picture = ({route}) => {
-  const {number} = route.params;
+  const { number } = route.params;
   const {file} = route.params;
   const [avatar, setAvatar] = useState('http://placekitten.com/100');
   const [owner, setOwner] = useState({username: 'somebody'});
   const {getFilesByTag} = useTag();
   const {getUser} = useUser();
   const [videoRef, setVideoRef] = useState(null);
+
+
 
   const fetchAvatar = async () => {
     try {
@@ -74,6 +76,7 @@ const Picture = ({route}) => {
     fetchAvatar();
     fetchOwner();
 
+
     const orientSub = ScreenOrientation.addOrientationChangeListener((evt) => {
       console.log('orientation', evt);
       if (evt.orientationInfo.orientation > 2) {
@@ -111,15 +114,16 @@ const Picture = ({route}) => {
             You added {owner.username}'s pet in the cart.
           </Text>
         </View>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <View style={{flexDirection:"row",justifyContent:"center"}}>
           <Icon
             name="grin-hearts"
             type="font-awesome-5"
             color="darkcyan"
             size="37"
-            containerStyle={{marginBottom: 15}}
+            containerStyle={{marginBottom:15}}
           />
         </View>
+
 
         <Card.Divider />
         <ListItem containerStyle={{backgroundColor: '#FFDCDC'}}></ListItem>

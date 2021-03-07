@@ -89,7 +89,7 @@ const StackScreen = () => {
             name="Modify"
             component={Modify}
             options={{
-              title: 'Modify pet info',
+              title: 'Pet info',
               headerStyle: {
                 backgroundColor: 'pink',
               },
@@ -104,7 +104,22 @@ const StackScreen = () => {
             name="My Files"
             component={MyFiles}
             options={{
-              title: 'My pets for adoption',
+              title: 'Pet info',
+              headerStyle: {
+                backgroundColor: 'pink',
+              },
+              headerTitleStyle: {
+                fontWeight: 'bold',
+                fontSize: 25,
+              },
+              headerTintColor: '#fff',
+            }}
+          />
+          <Stack.Screen
+            name="My Pet Cart"
+            component={MyPetCart}
+            options={{
+              title: 'MyPetCart',
               headerStyle: {
                 backgroundColor: 'pink',
               },
@@ -135,21 +150,6 @@ const StackScreen = () => {
             component={Picture}
             options={{
               title: 'Pet info',
-              headerStyle: {
-                backgroundColor: 'pink',
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                fontSize: 25,
-              },
-              headerTintColor: '#fff',
-            }}
-          />
-          <Stack.Screen
-            name="My Pet Cart"
-            component={MyPetCart}
-            options={{
-              title: 'Pet adoption page',
               headerStyle: {
                 backgroundColor: 'pink',
               },

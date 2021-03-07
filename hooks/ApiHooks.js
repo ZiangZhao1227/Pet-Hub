@@ -164,6 +164,24 @@ const useFavorite = () => {
       throw new Error('liked function error: ' + error.message);
     }
   };
+
+    const dislikeAnImage = async (fileId, token) => {
+      const request = 'file_id=' + fileId;
+      console.log(request);
+      const options = {
+        method: 'DELETE',
+        headers: {'x-access-token': token},
+        body: request,
+      };
+      try {
+        console.log(fileId, token);
+        const result = await doFetch(baseUrl + 'favourites/file/' + fileId, options);
+        return result;
+      } catch (error) {
+        throw new Error('disliked function error: ' + error.message);
+      }
+    };
+
   const loadLikes = async (token) => {
     const options = {
       method: 'GET',
@@ -176,7 +194,21 @@ const useFavorite = () => {
       throw new Error('liked function error: ' + error.message);
     }
   };
-  return {likeAnImage, loadLikes};
+
+  const loadDisLikes = async (token) => {
+    const options = {
+      method: 'GET',
+      headers: {'x-access-token': token},
+    };
+    try {
+      const result = await doFetch(baseUrl + 'favourites', options);
+      return result;
+    } catch (error) {
+      throw new Error('disliked function error: ' + error.message);
+    }
+  };
+
+  return {likeAnImage, loadLikes, dislikeAnImage, loadDisLikes};
 };
 
 const useMedia = () => {
