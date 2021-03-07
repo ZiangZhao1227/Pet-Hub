@@ -14,7 +14,7 @@ const doFetch = async (url, options = {}) => {
     // if API response does not contain error message, but there is some other error
     throw new Error('doFetch failed: ' + response.status);
   } else {
-    // if all goes well.
+    // if all goes well..
     return json;
   }
 };
