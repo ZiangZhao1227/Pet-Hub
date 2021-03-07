@@ -15,7 +15,7 @@ import {uploadsUrl} from '../utils/Variables';
 import {ScrollView} from 'react-native-gesture-handler';
 import * as ImagePicker from 'expo-image-picker';
 import {useMedia, useTag} from '../hooks/ApiHooks';
-import { View } from 'react-native';
+import {View} from 'react-native';
 
 const Profile = ({navigation}) => {
   const {isLoggedIn, setIsLoggedIn, user} = useContext(MainContext);
@@ -144,42 +144,58 @@ const Profile = ({navigation}) => {
           style={styles.image}
           PlaceholderContent={<ActivityIndicator />}
         />
-        <View style={[{ width: "55%", margin: 10,alignSelf:"center",marginTop:18 }]}>
-           <Button
-          icon={
-            <Icon
-              name="hand-pointer"
-              type="font-awesome-5"
-              size={20}
-              color="white"
-              containerStyle={{marginHorizontal: 10}}
-            />
-          }
-          iconLeft
-          title="Select an image"
-          buttonStyle={{backgroundColor: '#1ABBD1', size: 20,borderRadius:20}}
-          raised
-          onPress={() => pickImage(true)}
-        />
+        <View
+          style={[
+            {width: '55%', margin: 10, alignSelf: 'center', marginTop: 18},
+          ]}
+        >
+          <Button
+            icon={
+              <Icon
+                name="hand-pointer"
+                type="font-awesome-5"
+                size={20}
+                color="white"
+                containerStyle={{marginHorizontal: 10}}
+              />
+            }
+            iconLeft
+            title="Select an image"
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              borderRadius: 20,
+            }}
+            raised
+            onPress={() => pickImage(true)}
+          />
         </View>
-        <View style={[{ width: "65%", margin: 10,alignSelf:"center",marginBottom:18 }]}>
-        <Button
-          icon={
-            <Icon
-              name="image"
-              type="font-awesome-5"
-              size={20}
-              color="white"
-              containerStyle={{marginHorizontal: 10}}
-            />
-          }
-          iconLeft
-          title="Upload profile image"
-          buttonStyle={{backgroundColor: 'orange'}}
-          raised
-          onPress={doUpload}
-          buttonStyle={{backgroundColor: '#1ABBD1', size: 20,borderRadius:20}}
-        />
+        <View
+          style={[
+            {width: '65%', margin: 10, alignSelf: 'center', marginBottom: 18},
+          ]}
+        >
+          <Button
+            icon={
+              <Icon
+                name="image"
+                type="font-awesome-5"
+                size={20}
+                color="white"
+                containerStyle={{marginHorizontal: 10}}
+              />
+            }
+            iconLeft
+            title="Confirm changes"
+            buttonStyle={{backgroundColor: 'orange'}}
+            raised
+            onPress={doUpload}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              borderRadius: 20,
+            }}
+          />
         </View>
 
         <ListItem>
@@ -192,15 +208,7 @@ const Profile = ({navigation}) => {
           />
           <Text>{user.full_name}</Text>
         </ListItem>
-        <ListItem bottomDivider>
-          <Avatar
-            icon={{name: 'crow', type: 'font-awesome-5', color: '#1ABBD1'}}
-          />
-          <ListItem.Content>
-            <ListItem.Title>My pet cart</ListItem.Title>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem>
+
         <ListItem bottomDivider onPress={() => navigation.push('My Files')}>
           <Avatar icon={{name: 'perm-media', color: '#1ABBD1'}} />
           <ListItem.Content>

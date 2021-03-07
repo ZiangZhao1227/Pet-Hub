@@ -152,7 +152,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={doDisLike}>
+          <TouchableOpacity onPress={doDisLike} style={{marginLeft:40}}>
             <Icon
               raised
               name={like ? 'thumbs-down' : 'thumbs-down'}
@@ -161,17 +161,6 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
               color={like ? 'red' : 'grey'}
             />
           </TouchableOpacity>
-          <Icon
-            raised
-            name="plus"
-            type="font-awesome"
-            color="grey"
-            size={20}
-            onPress={() => {
-              navigation.navigate('Picture', {file: singleMedia});
-            }}
-            containerStyle={{marginLeft: 10}}
-          />
         </View>
       </View>
       <RNEListItem.Content>
