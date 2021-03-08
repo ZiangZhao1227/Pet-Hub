@@ -1,14 +1,13 @@
-import React, {useEffect, } from 'react';
-import {StyleSheet,View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import PropTypes from 'prop-types';
-
+import {uploadsUrl} from '../utils/Variables';
 import {Avatar, Card, ListItem, Text, Icon} from 'react-native-elements';
-
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Picture = ({route}) => {
-  const {fileTitle, picture,ownername} = route.params;
+  const {fileTitle, ownername, pet} = route.params;
 
   const unlock = async () => {
     try {
@@ -41,7 +40,7 @@ const Picture = ({route}) => {
       <Card containerStyle={{backgroundColor: '#FFDCDC'}}>
         <View style={{justifyContent: 'center'}}>
           <Avatar
-            source={{uri: picture}}
+            source={{uri: uploadsUrl + pet}}
             rounded
             size="large"
             containerStyle={{alignSelf: 'center'}}
@@ -56,7 +55,8 @@ const Picture = ({route}) => {
               margin: 20,
             }}
           >
-            You adopted {JSON.stringify(fileTitle)} from {JSON.stringify(ownername)} successfully!
+            You adopted {JSON.stringify(fileTitle)} from{' '}
+            {JSON.stringify(ownername)} successfully!
           </Text>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>

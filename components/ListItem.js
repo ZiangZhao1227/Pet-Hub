@@ -183,6 +183,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             alignSelf: 'center',
             fontSize: 16,
             marginTop: 10,
+            fontWeight:"bold",
           }}
         >
           {singleMedia.description}

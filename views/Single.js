@@ -11,7 +11,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import {ScrollView} from 'react-native-gesture-handler';
 import { View } from 'react-native';
 
-const Single = ({route, navigation,singleMedia, }) => {
+const Single = ({route, navigation,singleMedia}) => {
   const {file} = route.params;
   const [avatar, setAvatar] = useState('http://placekitten.com/100');
   const [owner, setOwner] = useState({username: 'somebody'});
@@ -147,7 +147,7 @@ const Single = ({route, navigation,singleMedia, }) => {
         containerStyle={{borderRadius:20}}
         titleStyle={{fontSize:40,fontWeight:"bold"}}
         onPress={() => {
-          navigation.navigate('Picture',{fileTitle:file.title,file: singleMedia,picture:avatar,ownername:owner.username})
+          navigation.navigate('Picture',{fileTitle:file.title,file: singleMedia,ownername:owner.username, pet:file.filename})
         }}
 
       />
