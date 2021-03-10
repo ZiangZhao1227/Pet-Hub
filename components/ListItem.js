@@ -12,19 +12,20 @@ import {View} from 'react-native';
 const ListItem = ({navigation, singleMedia, isMyFile}) => {
   // console.log(props);
   const {deleteFile} = useMedia();
-  const {likeAnImage, loadLikes, dislikeAnImage, loadDisLikes} = useFavorite();
+  const {likeAnImage, loadLikes, dislikeAnImage, removeRating} = useFavorite();
   const {setUpdate, update} = useContext(MainContext);
-  const [like, setLike] = useState(true);
+  const [like, setLike] = useState(0);
 
   const doLike = async () => {
     try {
-      setLike(!like);
-      if (like) {
+      //if like is 5 then removeRating then setlike to 0
+      setLike(5);
+      if (like === 5) {
         Alert.alert('Message', 'You liked this pet!');
       }
       const userToken = await AsyncStorage.getItem('userToken');
       const favResponse = await likeAnImage(singleMedia.file_id, userToken);
-      console.log('posting user like', favResponse);
+      // console.log('posting user like', favResponse.data);
     } catch (error) {
       console.log(error);
     }
@@ -32,18 +33,21 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
 
   const doDisLike = async () => {
     try {
-      setLike(!like);
-      if (!like) {
+      //if like is 5 then removeRating then setlike to 0
+      setLike(1);
+      if (like === 1) {
         Alert.alert('Message', 'You disliked this pet!');
       }
       const userToken = await AsyncStorage.getItem('userToken');
-      const unfavResponse = await dislikeAnImage(singleMedia.file_id, userToken);
-      console.log('posting user dislike', unfavResponse);
+      const unfavResponse = await dislikeAnImage(
+        singleMedia.file_id,
+        userToken
+      );
+      //console.log('posting user dislike', unfavResponse);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const loadlike = async () => {
     try {
@@ -51,9 +55,9 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       const favResponse = await loadLikes(userToken);
 
       favResponse.forEach((item) => {
-        console.log('posting user like', item);
+        //console.log('posting user like', item);
         if (item.file_id === singleMedia.file_id) {
-          setLike(false);
+          setLike(item.rating);
         }
       });
     } catch (error) {
@@ -67,9 +71,9 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       const favResponse = await loadDisLikes(userToken);
 
       favResponse.forEach((item) => {
-        console.log('posting user like', item);
+        //console.log('posting user like', item);
         if (item.file_id === singleMedia.file_id) {
-          setLike(false);
+          setLike(3);
         }
       });
     } catch (error) {
@@ -105,7 +109,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
       {cancelable: false}
     );
   };
-  console.log('valueOfLike : ', like);
+  //console.log('valueOfLike : ', like);
   return (
     <RNEListItem
       containerStyle={{
@@ -145,20 +149,20 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
           <TouchableOpacity onPress={doLike}>
             <Icon
               raised
-              name={like ? 'thumbs-up' : 'thumbs-up'}
+              name={'thumbs-up'}
               size={20}
               type="font-awesome-5"
-              color={like ? 'grey' : 'red'}
+              color={like === 5 ? 'red' : 'grey'}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={doDisLike} style={{marginLeft:40}}>
+          <TouchableOpacity onPress={doDisLike} style={{marginLeft: 40}}>
             <Icon
               raised
-              name={like ? 'thumbs-down' : 'thumbs-down'}
+              name={'thumbs-down'}
               size={20}
               type="font-awesome-5"
-              color={like ? 'red' : 'grey'}
+              color={like === 1 ? 'red' : 'grey'}
             />
           </TouchableOpacity>
         </View>
@@ -183,7 +187,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             alignSelf: 'center',
             fontSize: 16,
             marginTop: 10,
-            fontWeight:"bold",
+            fontWeight: 'bold',
           }}
         >
           {singleMedia.description}

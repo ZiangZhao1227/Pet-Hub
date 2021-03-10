@@ -9,9 +9,9 @@ import {Video} from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {ScrollView} from 'react-native-gesture-handler';
-import { View } from 'react-native';
+import {View} from 'react-native';
 
-const Single = ({route, navigation,singleMedia}) => {
+const Single = ({route, navigation, singleMedia}) => {
   const {file} = route.params;
   const [avatar, setAvatar] = useState('http://placekitten.com/100');
   const [owner, setOwner] = useState({username: 'somebody'});
@@ -75,7 +75,7 @@ const Single = ({route, navigation,singleMedia}) => {
     fetchOwner();
 
     const orientSub = ScreenOrientation.addOrientationChangeListener((evt) => {
-      console.log('orientation', evt);
+      // console.log('orientation', evt);
       if (evt.orientationInfo.orientation > 2) {
         // show video in fullscreen
         showVideoInFullscreen();
@@ -139,19 +139,24 @@ const Single = ({route, navigation,singleMedia}) => {
           Owner fullname: {owner.full_name}
         </Text>
       </Card>
-      <View style={{width: '55%', margin: 10, alignSelf: 'center', marginTop: 18,}}>
-      <Button
-       icon={{name: 'crow', type: 'font-awesome-5', color: 'white'}}
-        title="Adopt"
-        buttonStyle={{backgroundColor:"#1ABBD1"}}
-        containerStyle={{borderRadius:20}}
-        titleStyle={{fontSize:40,fontWeight:"bold"}}
-        onPress={() => {
-          navigation.navigate('Picture',{fileTitle:file.title,file: singleMedia,ownername:owner.username, pet:file.filename})
-        }}
-
-      />
-
+      <View
+        style={{width: '55%', margin: 10, alignSelf: 'center', marginTop: 18}}
+      >
+        <Button
+          icon={{name: 'crow', type: 'font-awesome-5', color: 'white'}}
+          title="Adopt"
+          buttonStyle={{backgroundColor: '#1ABBD1'}}
+          containerStyle={{borderRadius: 20}}
+          titleStyle={{fontSize: 40, fontWeight: 'bold'}}
+          onPress={() => {
+            navigation.navigate('Picture', {
+              fileTitle: file.title,
+              file: singleMedia,
+              ownername: owner.username,
+              pet: file.filename,
+            });
+          }}
+        />
       </View>
     </ScrollView>
   );
@@ -173,7 +178,6 @@ Single.propTypes = {
   route: PropTypes.object,
   navigation: PropTypes.object,
   singleMedia: PropTypes.object,
-
 };
 
 export default Single;

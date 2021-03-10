@@ -45,7 +45,7 @@ const Upload = ({navigation}) => {
       setIsUploading(true);
       const userToken = await AsyncStorage.getItem('userToken');
       const resp = await upload(formData, userToken);
-      console.log('upload response', resp);
+      // console.log('upload response', resp);
       const tagResponse = await postTag(
         {
           file_id: resp.file_id,
@@ -53,7 +53,7 @@ const Upload = ({navigation}) => {
         },
         userToken
       );
-      console.log('posting app identifier', tagResponse);
+      // console.log('posting app identifier', tagResponse);
       Alert.alert(
         'Upload',
         'File uploaded',
@@ -104,7 +104,7 @@ const Upload = ({navigation}) => {
       result = await ImagePicker.launchCameraAsync(options);
     }
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.cancelled) {
       // console.log('pickImage result', result);
@@ -120,9 +120,11 @@ const Upload = ({navigation}) => {
   return (
     <ScrollView>
       <KeyboardAvoidingView behavior="position" enabled>
-        <Card containerStyle={{backgroundColor: '#FFDCDC'}} borderBottomLeftRadius={54}>
-          <Text h4 style={{alignSelf:'center'}}>
-
+        <Card
+          containerStyle={{backgroundColor: '#FFDCDC'}}
+          borderBottomLeftRadius={54}
+        >
+          <Text h4 style={{alignSelf: 'center'}}>
             Upload media file
           </Text>
           {image && (
@@ -142,33 +144,51 @@ const Upload = ({navigation}) => {
             </>
           )}
           <Input
-           label="title"
-           labelStyle={{color:"#1ABBD1"}}
-            placeholder="title"
+            label="title"
+            labelStyle={{color: '#1ABBD1'}}
+            placeholder="format e.g:Animal species: Name"
             value={inputs.title}
             onChangeText={(txt) => handleInputChange('title', txt)}
             errorMessage={uploadErrors.title}
-            leftIcon={{ type: 'font-awesome-5', name: 'file-signature' ,color:"gray"}}
+            leftIcon={{
+              type: 'font-awesome-5',
+              name: 'file-signature',
+              color: 'gray',
+            }}
           />
           <Input
             placeholder="description"
             value={inputs.description}
             onChangeText={(txt) => handleInputChange('description', txt)}
             errorMessage={uploadErrors.description}
-            leftIcon={{ type: 'font-awesome-5', name: 'comment-dots' ,color:"gray"}}
+            leftIcon={{
+              type: 'font-awesome-5',
+              name: 'comment-dots',
+              color: 'gray',
+            }}
             label="description"
-            labelStyle={{color:"#1ABBD1"}}
+            labelStyle={{color: '#1ABBD1'}}
           />
 
           <Button
             title="Choose from library"
             onPress={() => pickImage(true)}
-            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20,borderRadius:20}}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
           <Button
             title="Use camera"
             onPress={() => pickImage(false)}
-            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20,borderRadius:20}}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
@@ -179,12 +199,22 @@ const Upload = ({navigation}) => {
               uploadErrors.description !== null ||
               image === null
             }
-            buttonStyle={{backgroundColor: 'darkorange', size: 20,marginBottom:20,borderRadius:20}}
+            buttonStyle={{
+              backgroundColor: 'darkorange',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
           <Button
             title="Reset"
             onPress={doReset}
-            buttonStyle={{backgroundColor: '#1ABBD1', size: 20,marginBottom:20,borderRadius:20}}
+            buttonStyle={{
+              backgroundColor: '#1ABBD1',
+              size: 20,
+              marginBottom: 20,
+              borderRadius: 20,
+            }}
           />
         </Card>
       </KeyboardAvoidingView>

@@ -5,7 +5,9 @@ import {appIdentifier, baseUrl} from '../utils/Variables';
 
 // general function for fetching (options default value is empty object)
 const doFetch = async (url, options = {}) => {
+  console.log('show something', url, options);
   const response = await fetch(url, options);
+  console.log('response');
   const json = await response.json();
   if (json.error) {
     // if API response contains error message (use Postman to get further details)
@@ -149,38 +151,49 @@ const useTag = () => {
 
 const useFavorite = () => {
   const likeAnImage = async (fileId, token) => {
-    const request = 'file_id=' + fileId;
+    const request = {file_id: fileId, rating: 5};
     console.log(request);
     const options = {
-      method: 'POST',
       headers: {'x-access-token': token},
-      body: request,
     };
     try {
-      console.log(fileId, token);
-      const result = await doFetch(baseUrl + 'favourites', options);
+      // console.log(fileId, token);
+      const result = await axios.post(baseUrl + 'ratings', request, options);
       return result;
     } catch (error) {
       throw new Error('liked function error: ' + error.message);
     }
   };
 
-    const dislikeAnImage = async (fileId, token) => {
-      const request = 'file_id=' + fileId;
-      console.log(request);
-      const options = {
-        method: 'DELETE',
-        headers: {'x-access-token': token},
-        body: request,
-      };
-      try {
-        console.log(fileId, token);
-        const result = await doFetch(baseUrl + 'favourites/file/' + fileId, options);
-        return result;
-      } catch (error) {
-        throw new Error('disliked function error: ' + error.message);
-      }
+  const dislikeAnImage = async (fileId, token) => {
+    const request = {file_id: fileId, rating: 1};
+    console.log(request);
+    const options = {
+      headers: {'x-access-token': token},
     };
+    try {
+      // console.log(fileId, token);
+      const result = await axios.post(baseUrl + 'ratings', request, options);
+      return result;
+    } catch (error) {
+      throw new Error('liked function error: ' + error.message);
+    }
+  };
+
+  const removeRating = async (fileId, token) => {
+    //  console.log(request);
+    const options = {
+      method: 'DELETE',
+      headers: {'x-access-token': token},
+    };
+    try {
+      //console.log(fileId, token);
+      const result = await doFetch(baseUrl + 'ratings/file/' + fileId, options);
+      return result;
+    } catch (error) {
+      throw new Error('disliked function error: ' + error.message);
+    }
+  };
 
   const loadLikes = async (token) => {
     const options = {
@@ -188,27 +201,14 @@ const useFavorite = () => {
       headers: {'x-access-token': token},
     };
     try {
-      const result = await doFetch(baseUrl + 'favourites', options);
+      const result = await doFetch(baseUrl + 'ratings', options);
       return result;
     } catch (error) {
       throw new Error('liked function error: ' + error.message);
     }
   };
 
-  const loadDisLikes = async (token) => {
-    const options = {
-      method: 'GET',
-      headers: {'x-access-token': token},
-    };
-    try {
-      const result = await doFetch(baseUrl + 'favourites', options);
-      return result;
-    } catch (error) {
-      throw new Error('disliked function error: ' + error.message);
-    }
-  };
-
-  return {likeAnImage, loadLikes, dislikeAnImage, loadDisLikes};
+  return {likeAnImage, loadLikes, dislikeAnImage, removeRating};
 };
 
 const useMedia = () => {
@@ -219,7 +219,7 @@ const useMedia = () => {
       data: fd,
       url: baseUrl + 'media',
     };
-    console.log('apihooks upload', options);
+    // console.log('apihooks upload', options);
     try {
       const response = await axios(options);
       return response.data;

@@ -73,7 +73,7 @@ const Profile = ({navigation}) => {
       result = await ImagePicker.launchCameraAsync(options);
     }
 
-    console.log(result);
+   // console.log(result);
 
     if (!result.cancelled) {
       setFiletype(result.type);
@@ -101,7 +101,7 @@ const Profile = ({navigation}) => {
       setIsUploading(true);
       const userToken = await AsyncStorage.getItem('userToken');
       const resp = await upload(formData, userToken);
-      console.log('upload response', resp);
+      //console.log('upload response', resp);
       const tagResponse = await postTag(
         {
           file_id: resp.file_id,
@@ -109,7 +109,7 @@ const Profile = ({navigation}) => {
         },
         userToken
       );
-      console.log('posting app identifier', tagResponse);
+     // console.log('posting app identifier', tagResponse);
       Alert.alert(
         'How nice!',
         'Profile picture changed',

@@ -6,7 +6,7 @@ import useSignUpForm from '../hooks/RegisterHooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useContext} from 'react';
 import {MainContext} from '../contexts/MainContext';
-import {Input, Button, Icon, } from 'react-native-elements';
+import {Input, Button, Icon} from 'react-native-elements';
 
 const RegisterForm = ({navigation}) => {
   const {setIsLoggedIn, setUser} = useContext(MainContext);
@@ -24,13 +24,13 @@ const RegisterForm = ({navigation}) => {
   const doRegister = async () => {
     if (!validateOnSend()) {
       Alert.alert('Input validation failed!');
-      console.log('validate on send failed');
+      //console.log('validate on send failed');
       return;
     }
     delete inputs.confirmPassword;
     try {
       const result = await postRegister(inputs);
-      console.log('doRegister ok', result.message);
+      //console.log('doRegister ok', result.message);
       Alert.alert(result.message);
       // do automatic login after registering
       const userData = await postLogin(inputs);
@@ -55,7 +55,7 @@ const RegisterForm = ({navigation}) => {
           handleInputEnd('username', event.nativeEvent.text);
         }}
         errorMessage={registerErrors.username}
-        leftIcon={{ type: 'font-awesome-5', name: 'user' ,color:"gray"}}
+        leftIcon={{type: 'font-awesome-5', name: 'user', color: 'gray'}}
       />
       <Input
         autoCapitalize="none"
@@ -66,7 +66,7 @@ const RegisterForm = ({navigation}) => {
         }
         secureTextEntry={true}
         errorMessage={registerErrors.password}
-        leftIcon={{ type: 'font-awesome-5', name: 'lock' ,color:"gray"}}
+        leftIcon={{type: 'font-awesome-5', name: 'lock', color: 'gray'}}
       />
       <Input
         autoCapitalize="none"
@@ -77,7 +77,7 @@ const RegisterForm = ({navigation}) => {
         }
         secureTextEntry={true}
         errorMessage={registerErrors.confirmPassword}
-        leftIcon={{ type: 'font-awesome-5', name: 'lock' ,color:"gray"}}
+        leftIcon={{type: 'font-awesome-5', name: 'lock', color: 'gray'}}
       />
       <Input
         autoCapitalize="none"
@@ -87,7 +87,7 @@ const RegisterForm = ({navigation}) => {
           handleInputEnd('email', event.nativeEvent.text)
         }
         errorMessage={registerErrors.email}
-        leftIcon={{ type: 'font-awesome-5', name: 'envelope' ,color:"gray"}}
+        leftIcon={{type: 'font-awesome-5', name: 'envelope', color: 'gray'}}
       />
       <Input
         autoCapitalize="none"
@@ -97,7 +97,7 @@ const RegisterForm = ({navigation}) => {
           handleInputEnd('full_name', event.nativeEvent.text)
         }
         errorMessage={registerErrors.full_name}
-        leftIcon={{ type: 'font-awesome-5', name: 'signature' ,color:"gray"}}
+        leftIcon={{type: 'font-awesome-5', name: 'signature', color: 'gray'}}
       />
       <Button
         title="Register"

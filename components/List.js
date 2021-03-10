@@ -29,7 +29,7 @@ const List = ({navigation, myFilesOnly}) => {
           ? item.title.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
-        console.log('search filter result', itemData.indexOf(textData));
+       // console.log('search filter result', itemData.indexOf(textData));
 
         return itemData.indexOf(textData) > -1;
       });
@@ -43,7 +43,7 @@ const List = ({navigation, myFilesOnly}) => {
     }
   };
 
-  console.log('search master data source', filteredDataSource);
+  //console.log('search master data source', filteredDataSource);
   // console.log('search media array', mediaArray);
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -58,7 +58,6 @@ const List = ({navigation, myFilesOnly}) => {
             justifyContent: 'space-around',
             borderTopWidth: 0,
             borderBottomWidth: 0,
-            marginTop: -25,
           }}
           searchIcon={{size: 18, color: '#1ABBD1'}}
           onChangeText={(text) => searchFilterFunction(text)}
