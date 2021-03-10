@@ -50,10 +50,20 @@ const List = ({navigation, myFilesOnly}) => {
       <View style={styles.container}>
         <SearchBar
           round
-          searchIcon={{size: 24,color:"#1ABBD1"}}
+          inputContainerStyle={{backgroundColor: 'white'}}
+          leftIconContainerStyle={{backgroundColor: 'white'}}
+          inputStyle={{backgroundColor: 'white'}}
+          containerStyle={{
+            backgroundColor: '#FFDCDC',
+            justifyContent: 'space-around',
+            borderTopWidth: 0,
+            borderBottomWidth: 0,
+            marginTop: -25,
+          }}
+          searchIcon={{size: 18, color: '#1ABBD1'}}
           onChangeText={(text) => searchFilterFunction(text)}
           onClear={() => searchFilterFunction('')}
-          placeholder="Find your favorite pet"
+          placeholder="Search, for example, Cat"
           value={search}
           showLoading
           lightTheme

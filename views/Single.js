@@ -2,15 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, ActivityIndicator} from 'react-native';
 import PropTypes from 'prop-types';
 import {uploadsUrl} from '../utils/Variables';
-import {Avatar, Card, Text} from 'react-native-elements';
+import {Avatar, Card, Text, Button, Icon} from 'react-native-elements';
 import moment from 'moment';
 import {useTag, useUser} from '../hooks/ApiHooks';
 import {Video} from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import {ScrollView} from 'react-native-gesture-handler';
+import { View } from 'react-native';
 
-const Single = ({route}) => {
+const Single = ({route, navigation,singleMedia}) => {
   const {file} = route.params;
   const [avatar, setAvatar] = useState('http://placekitten.com/100');
   const [owner, setOwner] = useState({username: 'somebody'});
@@ -138,6 +139,20 @@ const Single = ({route}) => {
           Owner fullname: {owner.full_name}
         </Text>
       </Card>
+      <View style={{width: '55%', margin: 10, alignSelf: 'center', marginTop: 18,}}>
+      <Button
+       icon={{name: 'crow', type: 'font-awesome-5', color: 'white'}}
+        title="Adopt"
+        buttonStyle={{backgroundColor:"#1ABBD1"}}
+        containerStyle={{borderRadius:20}}
+        titleStyle={{fontSize:40,fontWeight:"bold"}}
+        onPress={() => {
+          navigation.navigate('Picture',{fileTitle:file.title,file: singleMedia,ownername:owner.username, pet:file.filename})
+        }}
+
+      />
+
+      </View>
     </ScrollView>
   );
 };
@@ -156,6 +171,9 @@ const styles = StyleSheet.create({
 
 Single.propTypes = {
   route: PropTypes.object,
+  navigation: PropTypes.object,
+  singleMedia: PropTypes.object,
+
 };
 
 export default Single;

@@ -14,7 +14,7 @@ const doFetch = async (url, options = {}) => {
     // if API response does not contain error message, but there is some other error
     throw new Error('doFetch failed: ' + response.status);
   } else {
-    // if all goes well..
+    // if all goes well
     return json;
   }
 };
@@ -165,25 +165,22 @@ const useFavorite = () => {
     }
   };
 
-  const dislikeAnImage = async (fileId, token) => {
-    const request = 'file_id=' + fileId;
-    console.log(request);
-    const options = {
-      method: 'DELETE',
-      headers: {'x-access-token': token},
-      body: request,
+    const dislikeAnImage = async (fileId, token) => {
+      const request = 'file_id=' + fileId;
+      console.log(request);
+      const options = {
+        method: 'DELETE',
+        headers: {'x-access-token': token},
+        body: request,
+      };
+      try {
+        console.log(fileId, token);
+        const result = await doFetch(baseUrl + 'favourites/file/' + fileId, options);
+        return result;
+      } catch (error) {
+        throw new Error('disliked function error: ' + error.message);
+      }
     };
-    try {
-      console.log(fileId, token);
-      const result = await doFetch(
-        baseUrl + 'favourites/file/' + fileId,
-        options
-      );
-      return result;
-    } catch (error) {
-      throw new Error('disliked function error: ' + error.message);
-    }
-  };
 
   const loadLikes = async (token) => {
     const options = {

@@ -15,7 +15,6 @@ import {Icon} from 'react-native-elements';
 import Upload from '../views/Upload';
 import MyFiles from '../views/MyFiles';
 import Modify from '../views/Modify';
-import MyPetCart from '../views/MyPetCart';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -104,22 +103,7 @@ const StackScreen = () => {
             name="My Files"
             component={MyFiles}
             options={{
-              title: 'Pet info',
-              headerStyle: {
-                backgroundColor: 'pink',
-              },
-              headerTitleStyle: {
-                fontWeight: 'bold',
-                fontSize: 25,
-              },
-              headerTintColor: '#fff',
-            }}
-          />
-          <Stack.Screen
-            name="My Pet Cart"
-            component={MyPetCart}
-            options={{
-              title: 'MyPetCart',
+              title: 'My pets for adoption',
               headerStyle: {
                 backgroundColor: 'pink',
               },

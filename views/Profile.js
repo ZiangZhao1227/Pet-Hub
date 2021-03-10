@@ -186,7 +186,7 @@ const Profile = ({navigation}) => {
               />
             }
             iconLeft
-            title="Upload profile image"
+            title="Confirm changes"
             buttonStyle={{backgroundColor: 'orange'}}
             raised
             onPress={doUpload}
@@ -208,25 +208,11 @@ const Profile = ({navigation}) => {
           />
           <Text>{user.full_name}</Text>
         </ListItem>
-        <ListItem bottomDivider onPress={() => navigation.push('My Pet Cart')}>
-          <Avatar
-            icon={{name: 'crow', type: 'font-awesome-5', color: '#1ABBD1'}}
-          />
-          <ListItem.Content>
-            <ListItem.Title>Adopt a pet page</ListItem.Title>
-          </ListItem.Content>
-          <ListItem.Chevron />
-        </ListItem>
+
         <ListItem bottomDivider onPress={() => navigation.push('My Files')}>
-          <Avatar
-            icon={{
-              name: 'heart',
-              type: 'font-awesome-5',
-              color: '#1ABBD1',
-            }}
-          />
+          <Avatar icon={{name: 'perm-media', color: '#1ABBD1'}} />
           <ListItem.Content>
-            <ListItem.Title>My pets for adoption page</ListItem.Title>
+            <ListItem.Title>My Pets For Adoption</ListItem.Title>
           </ListItem.Content>
           <ListItem.Chevron />
         </ListItem>

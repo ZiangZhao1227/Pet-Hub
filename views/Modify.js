@@ -60,7 +60,7 @@ const Modify = ({navigation, route}) => {
           borderBottomLeftRadius={54}
         >
           <Text h4 style={{alignSelf: 'center'}}>
-            Update file info
+            Update pet info
           </Text>
           {/* TODO: add similar media view than Single.js */}
           <Input
@@ -93,7 +93,6 @@ const Modify = ({navigation, route}) => {
               color: 'gray',
             }}
           />
-
           {isUploading && <ActivityIndicator size="large" color="#0000ff" />}
           <Button
             title="Update"

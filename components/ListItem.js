@@ -37,15 +37,13 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
         Alert.alert('Message', 'You disliked this pet!');
       }
       const userToken = await AsyncStorage.getItem('userToken');
-      const unfavResponse = await dislikeAnImage(
-        singleMedia.file_id,
-        userToken
-      );
+      const unfavResponse = await dislikeAnImage(singleMedia.file_id, userToken);
       console.log('posting user dislike', unfavResponse);
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const loadlike = async () => {
     try {
@@ -154,7 +152,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={doDisLike}>
+          <TouchableOpacity onPress={doDisLike} style={{marginLeft:40}}>
             <Icon
               raised
               name={like ? 'thumbs-down' : 'thumbs-down'}
@@ -163,17 +161,6 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
               color={like ? 'red' : 'grey'}
             />
           </TouchableOpacity>
-          <Icon
-            raised
-            name="plus"
-            type="font-awesome"
-            color="grey"
-            size={20}
-            onPress={() => {
-              navigation.navigate('My Pet Cart', {file: singleMedia});
-            }}
-            containerStyle={{marginLeft: 10}}
-          />
         </View>
       </View>
       <RNEListItem.Content>
@@ -196,6 +183,7 @@ const ListItem = ({navigation, singleMedia, isMyFile}) => {
             alignSelf: 'center',
             fontSize: 16,
             marginTop: 10,
+            fontWeight:"bold",
           }}
         >
           {singleMedia.description}
