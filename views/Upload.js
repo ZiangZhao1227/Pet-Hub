@@ -157,7 +157,7 @@ const Upload = ({navigation}) => {
             }}
           />
           <Input
-            placeholder="description"
+            placeholder="animal description"
             value={inputs.description}
             onChangeText={(txt) => handleInputChange('description', txt)}
             errorMessage={uploadErrors.description}
