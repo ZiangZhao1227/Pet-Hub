@@ -146,7 +146,7 @@ const Upload = ({navigation}) => {
           <Input
             label="title"
             labelStyle={{color: '#1ABBD1'}}
-            placeholder="format e.g:Animal species: Name"
+            placeholder="Animal species: Animal Name"
             value={inputs.title}
             onChangeText={(txt) => handleInputChange('title', txt)}
             errorMessage={uploadErrors.title}
